@@ -299,117 +299,19 @@
 
       
         
-          
-            <h1 id="伪分布式配置手册"><a href="#伪分布式配置手册" class="headerlink" title="伪分布式配置手册"></a>伪分布式配置手册</h1><h2 id="系统环境"><a href="#系统环境" class="headerlink" title="系统环境"></a>系统环境</h2><ul>
+          <h1 id="伪分布式配置手册"><a href="#伪分布式配置手册" class="headerlink" title="伪分布式配置手册"></a>伪分布式配置手册</h1><h2 id="系统环境"><a href="#系统环境" class="headerlink" title="系统环境"></a>系统环境</h2><ul>
 <li>VMWare 10.0.1</li>
 <li>Mac</li>
-<li>CentOS7</li>
-<li>JDK7<h2 id="一、Mac-下面修改VMnet8网关地址"><a href="#一、Mac-下面修改VMnet8网关地址" class="headerlink" title="一、Mac 下面修改VMnet8网关地址"></a>一、Mac 下面修改VMnet8网关地址</h2></li>
-</ul>
-<ol>
-<li><p>进入文件夹</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">cd /Library/Preferences/VMware\ Fusion/vmnet8</div></pre></td></tr></table></figure>
-</li>
-<li><p>进入之后，打开nat.conf文件就可以查看到vmnet8的网关地址</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"># NAT gateway address</div><div class="line">ip = 192.168.121.1</div><div class="line">netmask = 255.255.255.0</div></pre></td></tr></table></figure>
-</li>
-</ol>
-<h2 id="二、固定linux的IP地址"><a href="#二、固定linux的IP地址" class="headerlink" title="二、固定linux的IP地址"></a>二、固定linux的IP地址</h2><ol>
-<li><p>进入文件夹,编辑ifcfg-ens33文件</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">cd /etc/sysconfig/network-scripts</div><div class="line">ls</div></pre></td></tr></table></figure>
-</li>
-<li><p>编辑ifcfg-ens33文件</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vi ifcfg-ens33</div></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>添加信息<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">TYPE=Ethernet</div><div class="line">PROXY_METHOD=none</div><div class="line">BROWSER_ONLY=no</div><div class="line">BOOTPROTO=none</div><div class="line">DEFROUTE=yes</div><div class="line">IPV4_FAILURE_FATAL=no</div><div class="line">IPV6INIT=yes</div><div class="line">IPV6_AUTOCONF=yes</div><div class="line">IPV6_DEFROUTE=yes</div><div class="line">IPV6_FAILURE_FATAL=no</div><div class="line">IPV6_ADDR_GEN_MODE=stable-privacy</div><div class="line">NAME=ens33</div><div class="line">UUID=b12ada89-a560-44ea-94cb-c01b0213dfde</div><div class="line">DEVICE=ens33</div><div class="line"></div><div class="line">BOOTPROTO=static</div><div class="line">ONBOOT=yes</div><div class="line">IPADDR=192.168.121.100</div><div class="line">NETMASK=255.255.255.0</div><div class="line">GATEWAY=192.168.121.1</div><div class="line">DNS1=8.8.8.8</div></pre></td></tr></table></figure></p>
-<p>配置好了之后，检查是否能够ping通。Mac终端里面pingCentOS<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ping 192.168.121.100</div></pre></td></tr></table></figure></p>
-<p>如果能够ping通，就可以在Mac中使用secureCRT了</p>
-<h2 id="三、给hadoop添加sudo"><a href="#三、给hadoop添加sudo" class="headerlink" title="三、给hadoop添加sudo"></a>三、给hadoop添加sudo</h2><p>1、使用命令visudo<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">visudo</div></pre></td></tr></table></figure></p>
-<p>2、添加<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"># 在 root 用户之后添加（请根据实际情况赋予权限）</div><div class="line">	root    ALL=(ALL)       ALL</div><div class="line">	hadoop   ALL=(ALL)       ALL</div></pre></td></tr></table></figure></p>
-<h2 id="四、修改主机名以及建立对应关系"><a href="#四、修改主机名以及建立对应关系" class="headerlink" title="四、修改主机名以及建立对应关系"></a>四、修改主机名以及建立对应关系</h2><ol>
-<li><p>修改主机名</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo hostnamectl set-hostname spark</div></pre></td></tr></table></figure>
-</li>
-<li><p>修改/etc/hosts,建立对应关系</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo vi /etc/hosts</div></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>添加<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">192.168.121.100 spark</div></pre></td></tr></table></figure></p>
-<h2 id="五、关闭防火墙"><a href="#五、关闭防火墙" class="headerlink" title="五、关闭防火墙"></a>五、关闭防火墙</h2><h2 id="六、安装JDK"><a href="#六、安装JDK" class="headerlink" title="六、安装JDK"></a>六、安装JDK</h2><p>可以使用两种方式来上传JDK到CentOS中。</p>
-<ol>
-<li><em>filezilla</em> 直接把文件拖拽到CentOS中即可</li>
-<li><p>使用命令行的方式。</p>
-<p> 在secureCRT中按快捷键 shift+cmd+p 打开sftp。<br> put 源地址 目的地址</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">put /Users/Downloads/jdk-7u80-linux-x64.tar.gz /home/hadoop/</div></pre></td></tr></table></figure>
-<p> 以上两种，上传JDK到CentOS中都可以。</p>
-</li>
-<li><p>配置JAVA_HOME</p>
-<ul>
-<li><p>解压JDK.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">mkdir app</div><div class="line">tar -zxvf jdk-7u80-linux-x64.tar.gz  -C app/</div></pre></td></tr></table></figure>
-</li>
-<li><p>修改/etc/profile</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo vi /etc/profile</div></pre></td></tr></table></figure>
-<p>最后一行，添加</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">export JAVA_HOME=/home/hadoop/app/jdk1.7.0_80</div><div class="line">export PATH=$PATH:$JAVA_HOME/bin</div></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-</ol>
-<h2 id="七、安装Hadoop"><a href="#七、安装Hadoop" class="headerlink" title="七、安装Hadoop"></a>七、安装Hadoop</h2><ol>
-<li><p>上传hadoop。使用命令行方式来上传,shift+cmd+p</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">put /Users/Downloads/hadoop-2.6.5.tar.gz</div></pre></td></tr></table></figure>
-<p> 不指定目的目录，会上传到用户的主目录。</p>
-</li>
-<li><p>解压</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">tar -zxvf hadoop-2.6.5.tar.gz  -C app/</div></pre></td></tr></table></figure>
-</li>
-<li><p>配置HADOOP_HOME</p>
-<ul>
-<li><p>修改/etc/profile</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo vi /etc/profile</div></pre></td></tr></table></figure>
-<p>最后一行，<code>新加</code>HADOOP_HOME这一行。修改(其实是添加)<code>PATH</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">export  HADOOP_HOME=/home/hadoop/app/hadoop-2.6.5</div><div class="line">export PATH=$PATH:$JAVA_HOME/bin:$HADOOP_HOME/bin:$HADOOP_HOME/sbin</div></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-</ol>
-<h2 id="八、配置hadoop的几个文件"><a href="#八、配置hadoop的几个文件" class="headerlink" title="八、配置hadoop的几个文件"></a>八、配置hadoop的几个文件</h2><ol>
-<li><p>配置 hadoop-env.sh</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo vi hadoop-env.sh</div></pre></td></tr></table></figure>
-<p> 找到export JAVA_HOME=$(JAVA_HOME)修改为</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">export JAVA_HOME=/home/hadoop/app/jdk1.7.0_80</div></pre></td></tr></table></figure>
-</li>
-<li><p>配置core-site.xml。找到<configuration></configuration></p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&lt;configuration&gt;</div><div class="line">&lt;property&gt;</div><div class="line">&lt;name&gt;fs.defaultFS&lt;/name&gt;</div><div class="line">&lt;value&gt;hdfs://spark:9000&lt;/value&gt;</div><div class="line">&lt;/property&gt;</div><div class="line">&lt;property&gt;</div><div class="line">&lt;name&gt;hadoop.tmp.dir&lt;/name&gt;</div><div class="line">&lt;value&gt;/home/hadoop/app/hadoop-2.6.5/data/&lt;/value&gt;</div><div class="line">&lt;/property&gt;</div><div class="line">&lt;/configuration&gt;</div></pre></td></tr></table></figure>
-</li>
-<li><p>配置hdfs-site.xml</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&lt;configuration&gt;</div><div class="line">&lt;property&gt;</div><div class="line">&lt;name&gt;dfs.repulication&lt;/name&gt;#副本</div><div class="line">&lt;value&gt;1&lt;/value&gt;#伪分布式陪1，全分布式一般为3</div><div class="line">&lt;/property&gt;</div><div class="line">&lt;/configuration&gt;</div></pre></td></tr></table></figure>
-<p>  到这里hdfs是可以启动了，但是为了方便，一次性把其他文件也配置了</p>
-</li>
-<li><p>配置mapred-site.xml.template<br>先修改名字</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">mv mapred-site.xml.template mapred-site.xml</div><div class="line"></div><div class="line">&lt;configuration&gt;</div><div class="line">&lt;property&gt;</div><div class="line">&lt;name&gt;mapreduce.framework.name&lt;/name&gt;</div><div class="line">&lt;value&gt;yarn&lt;/value&gt;</div><div class="line">&lt;/property&gt;</div><div class="line">&lt;/configuration&gt;</div></pre></td></tr></table></figure>
-</li>
-<li><p>配置yarn-site.xml</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">&lt;configuration&gt;</div><div class="line">&lt;property&gt;</div><div class="line">&lt;name&gt;yarn.resourcemanager.hostname&lt;/name&gt;</div><div class="line">&lt;value&gt;spark&lt;/value&gt;</div><div class="line">&lt;/property&gt;</div><div class="line">&lt;/configuration&gt;</div><div class="line">&lt;property&gt;</div><div class="line">&lt;name&gt;yarn.nodemanager.aux-services&lt;/name&gt;</div><div class="line">&lt;value&gt;mapreduce_shuffle&lt;/value&gt;</div><div class="line">&lt;/property&gt;</div><div class="line">&lt;/configuration&gt;</div></pre></td></tr></table></figure>
-</li>
-<li><p>格式化，第一次配置格式化。</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">hadoop namenode -format</div></pre></td></tr></table></figure>
-<p> 如果格式化成功，大概在倒数10-20左右会看到一个</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">17/11/11 03:02:19 INFO common.Storage: Storage directory /home/hadoop/app/hadoop-2.6.5/data/dfs/name has been successfully formatted.</div></pre></td></tr></table></figure>
-</li>
-<li><p>启动hdfs</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">start-dfs.sh</div></pre></td></tr></table></figure>
-<p> 第一次会提示你输入yes或者no。yes的话以后每次启动hdfs都会要求输入密码。no以后就不用输入密码。启动之后输入jps</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">jps</div></pre></td></tr></table></figure>
-<p> 看到</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">4715 SecondaryNameNode</div><div class="line">4478 NameNode</div><div class="line">4564 DataNode</div><div class="line">4838 Jps</div></pre></td></tr></table></figure>
-<p> 则启动成功，配置正确。<br>Done！<br>cqzhlei@163.com</p>
-</li>
-</ol>
-
-          
+<li>CentOS7 64bit</li>
+<li>JDK7</li>
+<li>hadoop 2.6.5
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/11/11/伪分布式云平台配置手册/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
