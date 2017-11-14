@@ -86,7 +86,7 @@
 <meta property="og:site_name" content="zThanks">
 <meta property="og:description" content="伪分布式配置手册系统环境 VMWare 10.0.1 Mac CentOS7 64bit JDK7 hadoop 2.6.5">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-11-11T08:34:39.515Z">
+<meta property="og:updated_time" content="2017-11-11T13:25:44.790Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="伪分布式搭建配置手册">
 <meta name="twitter:description" content="伪分布式配置手册系统环境 VMWare 10.0.1 Mac CentOS7 64bit JDK7 hadoop 2.6.5">
@@ -337,7 +337,15 @@
 </li>
 </ol>
 <p>添加<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">192.168.121.100 spark</div></pre></td></tr></table></figure></p>
-<h2 id="五、关闭防火墙"><a href="#五、关闭防火墙" class="headerlink" title="五、关闭防火墙"></a>五、关闭防火墙</h2><h2 id="六、安装JDK"><a href="#六、安装JDK" class="headerlink" title="六、安装JDK"></a>六、安装JDK</h2><p>可以使用两种方式来上传JDK到CentOS中。</p>
+<h2 id="五、关闭防火墙"><a href="#五、关闭防火墙" class="headerlink" title="五、关闭防火墙"></a>五、关闭防火墙</h2><ol>
+<li><p>查看防火墙状态。centos7中的防火墙指令和centos6不一样了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">firewall-cmd --state</div></pre></td></tr></table></figure>
+</li>
+<li><p>关闭防火墙</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">systemctl stop firewalld.service #停止firewall</div><div class="line">systemctl disable firewalld.service #禁止firewall开机启动</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="六、安装JDK"><a href="#六、安装JDK" class="headerlink" title="六、安装JDK"></a>六、安装JDK</h2><p>可以使用两种方式来上传JDK到CentOS中。</p>
 <ol>
 <li><em>filezilla</em> 直接把文件拖拽到CentOS中即可</li>
 <li><p>使用命令行的方式。</p>
@@ -433,8 +441,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/11/11/伪分布式搭建配置手册/" rel="next" title="伪分布式搭建配置手册">
-                <i class="fa fa-chevron-left"></i> 伪分布式搭建配置手册
+              <a href="/2017/10/23/hello-world/" rel="next" title="Hello World">
+                <i class="fa fa-chevron-left"></i> Hello World
               </a>
             
           </div>
@@ -442,6 +450,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/11/11/hdfs、MapReduce的测试/" rel="prev" title="HDFS、MapReduce的测试">
+                HDFS、MapReduce的测试 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
