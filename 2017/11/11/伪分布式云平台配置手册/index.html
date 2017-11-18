@@ -86,7 +86,7 @@
 <meta property="og:site_name" content="zThanks">
 <meta property="og:description" content="伪分布式配置手册系统环境 VMWare 10.0.1 Mac CentOS7 64bit JDK7 hadoop 2.6.5">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-11-11T13:25:44.790Z">
+<meta property="og:updated_time" content="2017-11-15T09:16:11.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="伪分布式搭建配置手册">
 <meta name="twitter:description" content="伪分布式配置手册系统环境 VMWare 10.0.1 Mac CentOS7 64bit JDK7 hadoop 2.6.5">
@@ -324,7 +324,8 @@
 </li>
 </ol>
 <p>添加信息<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">TYPE=Ethernet</div><div class="line">PROXY_METHOD=none</div><div class="line">BROWSER_ONLY=no</div><div class="line">BOOTPROTO=none</div><div class="line">DEFROUTE=yes</div><div class="line">IPV4_FAILURE_FATAL=no</div><div class="line">IPV6INIT=yes</div><div class="line">IPV6_AUTOCONF=yes</div><div class="line">IPV6_DEFROUTE=yes</div><div class="line">IPV6_FAILURE_FATAL=no</div><div class="line">IPV6_ADDR_GEN_MODE=stable-privacy</div><div class="line">NAME=ens33</div><div class="line">UUID=b12ada89-a560-44ea-94cb-c01b0213dfde</div><div class="line">DEVICE=ens33</div><div class="line"></div><div class="line">BOOTPROTO=static</div><div class="line">ONBOOT=yes</div><div class="line">IPADDR=192.168.121.100</div><div class="line">NETMASK=255.255.255.0</div><div class="line">GATEWAY=192.168.121.1</div><div class="line">DNS1=8.8.8.8</div></pre></td></tr></table></figure></p>
-<p>配置好了之后，检查是否能够ping通。Mac终端里面pingCentOS<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ping 192.168.121.100</div></pre></td></tr></table></figure></p>
+<p>配置好了之后，重启网络<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">systemctl restart network</div></pre></td></tr></table></figure></p>
+<p>检查是否能够ping通。Mac终端里面pingCentOS<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ping 192.168.121.100</div></pre></td></tr></table></figure></p>
 <p>如果能够ping通，就可以在Mac中使用secureCRT了</p>
 <h2 id="三、给hadoop添加sudo"><a href="#三、给hadoop添加sudo" class="headerlink" title="三、给hadoop添加sudo"></a>三、给hadoop添加sudo</h2><p>1、使用命令visudo<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">visudo</div></pre></td></tr></table></figure></p>
 <p>2、添加<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"># 在 root 用户之后添加（请根据实际情况赋予权限）</div><div class="line">	root    ALL=(ALL)       ALL</div><div class="line">	hadoop   ALL=(ALL)       ALL</div></pre></td></tr></table></figure></p>
