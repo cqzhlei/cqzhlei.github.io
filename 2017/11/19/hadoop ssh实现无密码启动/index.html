@@ -79,17 +79,17 @@
 
 
 
-<meta name="description" content="使用ssh实现无密码启动hdfs如果一个集群都使用密码来登录，可想而知是一件十分害怕的事情，所以就很有必要使用ssh来实现无密码登录了 本机的免密码启动hdfs 检查本机.ssh文件中是否有authorized_keys文件，没有则创建并且修改权限,修改权限,修改权限 123cd .sshtouch authorized_keyschmod 600 authorized_keys  产生密钥对">
+<meta name="description" content="使用ssh实现无密码启动hdfs如果一个集群都使用密码来登录，可想而知是一件十分害怕的事情，所以就很有必要使用ssh来实现无密码登录了 本机的免密码启动hdfs 检查本机.ssh文件中是否有authorized_keys文件，没有则创建并且修改权限,修改权限,修改权限123cd .sshtouch authorized_keyschmod 600 authorized_keys">
 <meta property="og:type" content="article">
-<meta property="og:title" content="伪分布式搭建配置手册">
+<meta property="og:title" content="hadoop ssh实现无密码启动">
 <meta property="og:url" content="https://github.com/cqzhlei/2017/11/19/hadoop ssh实现无密码启动/index.html">
 <meta property="og:site_name" content="zThanks">
-<meta property="og:description" content="使用ssh实现无密码启动hdfs如果一个集群都使用密码来登录，可想而知是一件十分害怕的事情，所以就很有必要使用ssh来实现无密码登录了 本机的免密码启动hdfs 检查本机.ssh文件中是否有authorized_keys文件，没有则创建并且修改权限,修改权限,修改权限 123cd .sshtouch authorized_keyschmod 600 authorized_keys  产生密钥对">
+<meta property="og:description" content="使用ssh实现无密码启动hdfs如果一个集群都使用密码来登录，可想而知是一件十分害怕的事情，所以就很有必要使用ssh来实现无密码登录了 本机的免密码启动hdfs 检查本机.ssh文件中是否有authorized_keys文件，没有则创建并且修改权限,修改权限,修改权限123cd .sshtouch authorized_keyschmod 600 authorized_keys">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-11-19T09:12:00.000Z">
+<meta property="og:updated_time" content="2017-11-24T11:54:26.686Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="伪分布式搭建配置手册">
-<meta name="twitter:description" content="使用ssh实现无密码启动hdfs如果一个集群都使用密码来登录，可想而知是一件十分害怕的事情，所以就很有必要使用ssh来实现无密码登录了 本机的免密码启动hdfs 检查本机.ssh文件中是否有authorized_keys文件，没有则创建并且修改权限,修改权限,修改权限 123cd .sshtouch authorized_keyschmod 600 authorized_keys  产生密钥对">
+<meta name="twitter:title" content="hadoop ssh实现无密码启动">
+<meta name="twitter:description" content="使用ssh实现无密码启动hdfs如果一个集群都使用密码来登录，可想而知是一件十分害怕的事情，所以就很有必要使用ssh来实现无密码登录了 本机的免密码启动hdfs 检查本机.ssh文件中是否有authorized_keys文件，没有则创建并且修改权限,修改权限,修改权限123cd .sshtouch authorized_keyschmod 600 authorized_keys">
 
 
 
@@ -125,7 +125,7 @@
 
 
 
-  <title>伪分布式搭建配置手册 | zThanks</title>
+  <title>hadoop ssh实现无密码启动 | zThanks</title>
   
 
 
@@ -249,7 +249,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">伪分布式搭建配置手册</h1>
+          <h1 class="post-title" itemprop="name headline">hadoop ssh实现无密码启动</h1>
         
 
         <div class="post-meta">
@@ -301,11 +301,12 @@
       
         <h1 id="使用ssh实现无密码启动hdfs"><a href="#使用ssh实现无密码启动hdfs" class="headerlink" title="使用ssh实现无密码启动hdfs"></a>使用ssh实现无密码启动hdfs</h1><p>如果一个集群都使用密码来登录，可想而知是一件十分害怕的事情，所以就很有必要使用ssh来实现无密码登录了</p>
 <h2 id="本机的免密码启动hdfs"><a href="#本机的免密码启动hdfs" class="headerlink" title="本机的免密码启动hdfs"></a>本机的免密码启动hdfs</h2><ol>
-<li><p>检查本机<code>.ssh</code>文件中是否有<code>authorized_keys</code>文件，没有则创建并且<code>修改权限,修改权限,修改权限</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">cd .ssh</div><div class="line">touch authorized_keys</div><div class="line">chmod 600 authorized_keys</div></pre></td></tr></table></figure>
+<li>检查本机<code>.ssh</code>文件中是否有<code>authorized_keys</code>文件，没有则创建并且<code>修改权限,修改权限,修改权限</code><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">cd .ssh</div><div class="line">touch authorized_keys</div><div class="line">chmod 600 authorized_keys</div></pre></td></tr></table></figure>
 </li>
-<li><p>产生密钥对,输入下面命令之后会提示三次，这三次什么提示都不要输入任何字符，<code>不要输入任何字符</code>..<code>不要输入任何字符</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ssh-keygen -t rsa</div></pre></td></tr></table></figure>
+</ol>
+<a id="more"></a>
+<ol>
+<li>产生密钥对,输入下面命令之后会提示三次，这三次什么提示都不要输入任何字符，<code>不要输入任何字符</code>..<code>不要输入任何字符</code><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ssh-keygen -t rsa</div></pre></td></tr></table></figure>
 </li>
 </ol>
 <p>使用<code>ll</code>命令可以在文件夹中至少看到下面的信息<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">-rw-------. 1 hadoop hadoop  602 Nov 19 03:08 authorized_keys</div><div class="line">-rw-------. 1 hadoop hadoop 1675 Nov 19 03:30 id_rsa</div><div class="line">-rw-r--r--. 1 hadoop hadoop  394 Nov 19 03:30 id_rsa.pub</div></pre></td></tr></table></figure></p>
@@ -357,8 +358,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/11/11/hdfs、MapReduce的测试/" rel="next" title="HDFS、MapReduce的测试">
-                <i class="fa fa-chevron-left"></i> HDFS、MapReduce的测试
+              <a href="/2017/11/19/配置完全分布式的Hadoop/" rel="next" title="云平台配置3：配置完全分布式的 Hadoop">
+                <i class="fa fa-chevron-left"></i> 云平台配置3：配置完全分布式的 Hadoop
               </a>
             
           </div>
@@ -366,10 +367,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/11/21/配置完全分布式的Hadoop/" rel="prev" title="">
-                 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>

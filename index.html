@@ -229,190 +229,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://github.com/cqzhlei/2017/11/21/配置完全分布式的Hadoop/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="zThanks">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="zThanks">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/11/21/配置完全分布式的Hadoop/" itemprop="url">未命名</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-21T20:42:15+08:00">
-                2017-11-21
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="云平台配置3：配置完全分布式的-Hadoop"><a href="#云平台配置3：配置完全分布式的-Hadoop" class="headerlink" title="云平台配置3：配置完全分布式的 Hadoop"></a>云平台配置3：配置完全分布式的 Hadoop</h1><p>前面说了伪分布式的配置，也说了如何配置ssh，到现在是时候配置具有完全分布式的hadoop了</p>
-<h2 id="一、配置-Hadoop"><a href="#一、配置-Hadoop" class="headerlink" title="一、配置 Hadoop"></a>一、配置 Hadoop</h2><ol>
-<li>下载 Hadoop 。例如 <code>hadoop-2.6.5.tar.gz</code> 。</li>
-<li>解压到 <code>/opt</code> 目录下并设置目录权限。</li>
-<li><p>配置环境变量。</p>
-<ul>
-<li><code>sudo vim /etc/profile</code></li>
-<li>在文件中添加：<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">export HADOOP_HOME=/opt/hadoop-2.6.5</div><div class="line">export PATH=$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin</div></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-<li><p>更改配置文件（位于 <code>/opt/hadoop-2.6.5/etc/hadoop</code> 目录）。</p>
-<ul>
-<li>hadoop-env.sh<br>  找到并修改： <code>export JAVA_HOME=/opt/jdk1.8.0_121</code> 。</li>
-<li><p>core-site.xml<br>  找到并修改：</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">&lt;configuration&gt;</div><div class="line">	&lt;property&gt;</div><div class="line">		&lt;name&gt;fs.defaultFS&lt;/name&gt;</div><div class="line">		&lt;value&gt;hdfs://spark1:9000&lt;/value&gt;</div><div class="line">	&lt;/property&gt;</div><div class="line">	&lt;property&gt;</div><div class="line">		&lt;name&gt;hadoop.tmp.dir&lt;/name&gt;</div><div class="line">		&lt;value&gt;file:/home/spark/hadoop-2.6.5/tmp&lt;/value&gt;</div><div class="line">		&lt;description&gt;Abase for ohr temporary directories.&lt;/description&gt;</div><div class="line">	&lt;/property&gt;</div><div class="line">&lt;/configuration&gt;</div></pre></td></tr></table></figure>
-<blockquote>
-<p>请注意记录，此处的HDFS端口号为 <code>9000</code> 。</p>
-</blockquote>
-</li>
-<li><p>hdfs-site.xml<br>  找到并修改：</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">&lt;configuration&gt;</div><div class="line">	&lt;property&gt;</div><div class="line">		&lt;name&gt;dfs.namenode.secondary.http-address&lt;/name&gt;</div><div class="line">		&lt;value&gt;spark1:50090&lt;/value&gt;</div><div class="line">	&lt;/property&gt;</div><div class="line">	&lt;property&gt;</div><div class="line">		&lt;name&gt;dfs.replication&lt;/name&gt;</div><div class="line">		&lt;value&gt;2&lt;/value&gt;</div><div class="line">	&lt;/property&gt;</div><div class="line">	&lt;property&gt;</div><div class="line">		&lt;name&gt;dfs.namenode.name.dir&lt;/name&gt;</div><div class="line">		&lt;value&gt;file:/home/spark/hadoop-2.6.5/tmp/dfs/name&lt;/value&gt;</div><div class="line">	&lt;/property&gt;</div><div class="line">	&lt;property&gt;</div><div class="line">		&lt;name&gt;dfs.datanode.data.dir&lt;/name&gt;</div><div class="line">		&lt;value&gt;file:/home/spark/hadoop-2.6.5/data&lt;/value&gt;</div><div class="line">	&lt;/property&gt;</div><div class="line">&lt;/configuration&gt;</div></pre></td></tr></table></figure>
-<blockquote>
-<p>请根据实际情况修改 <code>dfs.replication</code> 的值（默认为 3 ）。</p>
-</blockquote>
-</li>
-<li><p>mapred-site.xml<br>  找到并修改：</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">&lt;configuration&gt;</div><div class="line">	&lt;property&gt;</div><div class="line">		&lt;name&gt;mapreduce.framework.name&lt;/name&gt;</div><div class="line">		&lt;value&gt;yarn&lt;/value&gt;</div><div class="line">	&lt;/property&gt;</div><div class="line">	&lt;property&gt;</div><div class="line">		&lt;name&gt;mapreduce.jobhistory.address&lt;/name&gt;</div><div class="line">		&lt;value&gt;spark1:10020&lt;/value&gt;</div><div class="line">	&lt;/property&gt;</div><div class="line">	&lt;property&gt;</div><div class="line">		&lt;name&gt;mapreduce.jobhistory.webapp.address&lt;/name&gt;</div><div class="line">		&lt;value&gt;spark1:19888&lt;/value&gt;</div><div class="line">	&lt;/property&gt;</div><div class="line">&lt;/configuration&gt;</div></pre></td></tr></table></figure>
-</li>
-<li><p>yarn-site.xml<br>  找到并修改：</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&lt;configuration&gt;</div><div class="line">	&lt;property&gt;</div><div class="line">		&lt;name&gt;yarn.resourcemanager.hostname&lt;/name&gt;</div><div class="line">		&lt;value&gt;spark1&lt;/value&gt;</div><div class="line">	&lt;/property&gt;</div><div class="line">	&lt;property&gt;</div><div class="line">		&lt;name&gt;yarn.nodemanager.aux-services&lt;/name&gt;</div><div class="line">		&lt;value&gt;mapreduce_shuffle&lt;/value&gt;</div><div class="line">	&lt;/property&gt;</div><div class="line">&lt;/configuration&gt;</div></pre></td></tr></table></figure>
-</li>
-<li><p>复制 slaves.template 为 slaves，并编辑 slaves 文件。<br>  添加：</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">spark2</div><div class="line">spark3</div></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-<li><p>将 Hadoop 整个目录复制到 spark2 和 spark3 节点（scp 命令）。</p>
-</li>
-</ol>
-<h2 id="二、-启动和关闭-Hadoop-服务"><a href="#二、-启动和关闭-Hadoop-服务" class="headerlink" title="二、 启动和关闭 Hadoop 服务"></a>二、 启动和关闭 Hadoop 服务</h2><h3 id="2-1-启动-Hadoop-的步骤"><a href="#2-1-启动-Hadoop-的步骤" class="headerlink" title="2.1 启动 Hadoop 的步骤"></a>2.1 启动 Hadoop 的步骤</h3><ol>
-<li><strong>（仅首次启动前执行）</strong>格式化 NameNode ：<code>hadoop namenode -format</code>。</li>
-<li>启动 HDFS 文件系统服务：<code>start-dfs.sh</code>。</li>
-<li>启动 YARN：<code>start-yarn.sh</code>。</li>
-<li>使用 <code>jps</code> 命令查看相关进程是否启动。<br> spark1：<ul>
-<li>NameNode</li>
-<li>SecondaryNameNode</li>
-<li>ResourceManager<br>spark2 和 spark3：</li>
-<li>DataNode</li>
-<li>NodeManager</li>
-</ul>
-</li>
-</ol>
-<blockquote>
-<p>如果上述进程未能全部启动，可以按照以下步骤排查：</p>
-<ol>
-<li>使用 <code>stop-yarn.sh</code> 和 <code>stop-dfs.sh</code> 关闭所有服务。</li>
-<li>检查 spark 用户是否拥有相关目录的权限。</li>
-<li>尝试清空 core-site.xml 配置文件中的 <code>hadoop.tmp.dir</code> 配置项所指向的目录。</li>
-</ol>
-</blockquote>
-<h3 id="2-2-关闭-Hadoop-的步骤"><a href="#2-2-关闭-Hadoop-的步骤" class="headerlink" title="2.2 关闭 Hadoop 的步骤"></a>2.2 关闭 Hadoop 的步骤</h3><p>依次输入 <code>stop-yarn.sh</code> 和 <code>stop-dfs.sh</code> 即可。</p>
-<blockquote>
-<p><strong>注意：每次关闭系统之前必须执行该步骤。</strong></p>
-</blockquote>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://github.com/cqzhlei/2017/11/19/hadoop ssh实现无密码启动/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -432,7 +248,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/11/19/hadoop ssh实现无密码启动/" itemprop="url">伪分布式搭建配置手册</a></h1>
+                <a class="post-title-link" href="/2017/11/19/hadoop ssh实现无密码启动/" itemprop="url">hadoop ssh实现无密码启动</a></h1>
         
 
         <div class="post-meta">
@@ -483,43 +299,142 @@
 
       
         
-          
-            <h1 id="使用ssh实现无密码启动hdfs"><a href="#使用ssh实现无密码启动hdfs" class="headerlink" title="使用ssh实现无密码启动hdfs"></a>使用ssh实现无密码启动hdfs</h1><p>如果一个集群都使用密码来登录，可想而知是一件十分害怕的事情，所以就很有必要使用ssh来实现无密码登录了</p>
+          <h1 id="使用ssh实现无密码启动hdfs"><a href="#使用ssh实现无密码启动hdfs" class="headerlink" title="使用ssh实现无密码启动hdfs"></a>使用ssh实现无密码启动hdfs</h1><p>如果一个集群都使用密码来登录，可想而知是一件十分害怕的事情，所以就很有必要使用ssh来实现无密码登录了</p>
 <h2 id="本机的免密码启动hdfs"><a href="#本机的免密码启动hdfs" class="headerlink" title="本机的免密码启动hdfs"></a>本机的免密码启动hdfs</h2><ol>
-<li><p>检查本机<code>.ssh</code>文件中是否有<code>authorized_keys</code>文件，没有则创建并且<code>修改权限,修改权限,修改权限</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">cd .ssh</div><div class="line">touch authorized_keys</div><div class="line">chmod 600 authorized_keys</div></pre></td></tr></table></figure>
-</li>
-<li><p>产生密钥对,输入下面命令之后会提示三次，这三次什么提示都不要输入任何字符，<code>不要输入任何字符</code>..<code>不要输入任何字符</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ssh-keygen -t rsa</div></pre></td></tr></table></figure>
+<li>检查本机<code>.ssh</code>文件中是否有<code>authorized_keys</code>文件，没有则创建并且<code>修改权限,修改权限,修改权限</code><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">cd .ssh</div><div class="line">touch authorized_keys</div><div class="line">chmod 600 authorized_keys</div></pre></td></tr></table></figure>
 </li>
 </ol>
-<p>使用<code>ll</code>命令可以在文件夹中至少看到下面的信息<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">-rw-------. 1 hadoop hadoop  602 Nov 19 03:08 authorized_keys</div><div class="line">-rw-------. 1 hadoop hadoop 1675 Nov 19 03:30 id_rsa</div><div class="line">-rw-r--r--. 1 hadoop hadoop  394 Nov 19 03:30 id_rsa.pub</div></pre></td></tr></table></figure></p>
-<p>其中，id_rsa为私钥，id_rsa.pub为公钥。接下来要做的一步就是把id_rsa.pub添加到authorized_keys文件中<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">cat id_rsa.pub &gt;&gt; authorized_keys</div></pre></td></tr></table></figure></p>
-<ol>
-<li>启动hdfs，测试是否正确</li>
-</ol>
-<h2 id="集群实现免密码登录"><a href="#集群实现免密码登录" class="headerlink" title="集群实现免密码登录"></a>集群实现免密码登录</h2><h3 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h3><ul>
-<li>保证每台节点中的用户名相同（例如都为<code>spark</code>）。如果没有，则创建。<blockquote>
-<p>不要直接使用 root 用户。请为集群单独创建用户。</p>
-</blockquote>
-</li>
-</ul>
-<h3 id="将用户添加至-sudoer-列表"><a href="#将用户添加至-sudoer-列表" class="headerlink" title="将用户添加至 sudoer 列表"></a>将用户添加至 sudoer 列表</h3><ol>
-<li>切换到 root 用户（<code>su -</code>）。</li>
-<li><p>使用 <code>visudo</code> 命令，添加 spark 用户到 sudoer 列表。</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"># 在 root 用户之后添加（请根据实际情况赋予权限）</div><div class="line">root    ALL=(ALL)       ALL</div><div class="line">spark   ALL=(ALL)       ALL</div></pre></td></tr></table></figure>
-</li>
-<li><p>保存退出。</p>
-<h3 id="远程拷贝id-rsa-pub给所有主机"><a href="#远程拷贝id-rsa-pub给所有主机" class="headerlink" title="远程拷贝id_rsa.pub给所有主机"></a>远程拷贝id_rsa.pub给所有主机</h3></li>
-<li><p>把刚刚生成的id_rsa.pub远程拷贝给所有主机,我们这里另外一台机器名spark01</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">scp id_rsa.pub spark01:/home/hadoop/.ssh</div></pre></td></tr></table></figure>
-</li>
-<li><p>登录spark01,把id_rsa.pub添加进authorized_keys中</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">cat id_rsa.pub &gt;&gt; authorized_keys</div></pre></td></tr></table></figure>
-</li>
-</ol>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/11/19/hadoop ssh实现无密码启动/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://github.com/cqzhlei/2017/11/19/配置完全分布式的Hadoop/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zThanks">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="zThanks">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/11/19/配置完全分布式的Hadoop/" itemprop="url">云平台配置3：配置完全分布式的 Hadoop</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-19T00:00:00+08:00">
+                2017-11-19
+              </time>
+            
+
+            
+
+            
+          </span>
 
           
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h1 id="云平台配置3：配置完全分布式的-Hadoop"><a href="#云平台配置3：配置完全分布式的-Hadoop" class="headerlink" title="云平台配置3：配置完全分布式的 Hadoop"></a>云平台配置3：配置完全分布式的 Hadoop</h1><p>前面说了伪分布式的配置，也说了如何配置ssh，到现在是时候配置具有完全分布式的hadoop了</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/11/19/配置完全分布式的Hadoop/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
