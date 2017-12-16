@@ -79,17 +79,17 @@
 
 
 
-<meta name="description" content="爬取猫眼电影Top100最近学习爬虫 环境  Python3.6 requests re  目标网站  猫眼电影top100榜单  网站分析通过观察，我们知道，每一部电影信息都包含在一个dd标签中。接下来就是根据这个dd标签里面包含的信息来解析了。 电影名&amp;lt;p class=&amp;quot;name&amp;quot;&amp;gt;标签中 主演&amp;lt;p class=&amp;quot;star&amp;quot;&amp;gt;标">
+<meta name="description" content="爬取猫眼电影Top100 title: 爬取猫眼电影Top100date: 2017-12-16 tags:最近学习爬虫 环境  Python3.6 requests re  目标网站  猫眼电影top100榜单">
 <meta property="og:type" content="article">
 <meta property="og:title" content="zThanks">
 <meta property="og:url" content="https://github.com/cqzhlei/2017/12/11/爬虫/index.html">
 <meta property="og:site_name" content="zThanks">
-<meta property="og:description" content="爬取猫眼电影Top100最近学习爬虫 环境  Python3.6 requests re  目标网站  猫眼电影top100榜单  网站分析通过观察，我们知道，每一部电影信息都包含在一个dd标签中。接下来就是根据这个dd标签里面包含的信息来解析了。 电影名&amp;lt;p class=&amp;quot;name&amp;quot;&amp;gt;标签中 主演&amp;lt;p class=&amp;quot;star&amp;quot;&amp;gt;标">
+<meta property="og:description" content="爬取猫眼电影Top100 title: 爬取猫眼电影Top100date: 2017-12-16 tags:最近学习爬虫 环境  Python3.6 requests re  目标网站  猫眼电影top100榜单">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-12-11T10:30:51.115Z">
+<meta property="og:updated_time" content="2017-12-16T14:41:28.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="zThanks">
-<meta name="twitter:description" content="爬取猫眼电影Top100最近学习爬虫 环境  Python3.6 requests re  目标网站  猫眼电影top100榜单  网站分析通过观察，我们知道，每一部电影信息都包含在一个dd标签中。接下来就是根据这个dd标签里面包含的信息来解析了。 电影名&amp;lt;p class=&amp;quot;name&amp;quot;&amp;gt;标签中 主演&amp;lt;p class=&amp;quot;star&amp;quot;&amp;gt;标">
+<meta name="twitter:description" content="爬取猫眼电影Top100 title: 爬取猫眼电影Top100date: 2017-12-16 tags:最近学习爬虫 环境  Python3.6 requests re  目标网站  猫眼电影top100榜单">
 
 
 
@@ -299,7 +299,9 @@
       
 
       
-        <h1 id="爬取猫眼电影Top100"><a href="#爬取猫眼电影Top100" class="headerlink" title="爬取猫眼电影Top100"></a>爬取猫眼电影Top100</h1><p>最近学习爬虫</p>
+        <h1 id="爬取猫眼电影Top100"><a href="#爬取猫眼电影Top100" class="headerlink" title="爬取猫眼电影Top100"></a>爬取猫眼电影Top100</h1><hr>
+<p>title: 爬取猫眼电影Top100<br>date: 2017-12-16</p>
+<h2 id="tags"><a href="#tags" class="headerlink" title="tags:"></a>tags:</h2><p>最近学习爬虫</p>
 <p>环境</p>
 <ul>
 <li>Python3.6</li>
@@ -308,9 +310,10 @@
 </ul>
 <p>目标网站</p>
 <ul>
-<li>猫眼电影<a href="https://maoyan.com/board/4" target="_blank" rel="external">top100榜单</a></li>
+<li>猫眼电影<a href="https://maoyan.com/board/4" target="_blank" rel="external">top100榜单</a><a id="more"></a>
+<h2 id="网站分析"><a href="#网站分析" class="headerlink" title="网站分析"></a>网站分析</h2></li>
 </ul>
-<h2 id="网站分析"><a href="#网站分析" class="headerlink" title="网站分析"></a>网站分析</h2><p>通过观察，我们知道，每一部电影信息都包含在一个<code>dd</code>标签中。接下来就是根据这个dd标签里面包含的信息来解析了。</p>
+<p>通过观察，我们知道，每一部电影信息都包含在一个<code>dd</code>标签中。接下来就是根据这个dd标签里面包含的信息来解析了。</p>
 <h3 id="电影名"><a href="#电影名" class="headerlink" title="电影名"></a>电影名</h3><p><code>&lt;p class=&quot;name&quot;&gt;</code>标签中</p>
 <h3 id="主演"><a href="#主演" class="headerlink" title="主演"></a>主演</h3><p><code>&lt;p class=&quot;star&quot;&gt;</code>标签中</p>
 <h3 id="上映时间"><a href="#上映时间" class="headerlink" title="上映时间"></a>上映时间</h3><p><code>&lt;p class=&quot;releasetime&quot;&gt;</code>标签中</p>
@@ -471,7 +474,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#爬取猫眼电影Top100"><span class="nav-number">1.</span> <span class="nav-text">爬取猫眼电影Top100</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#网站分析"><span class="nav-number">1.1.</span> <span class="nav-text">网站分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#电影名"><span class="nav-number">1.1.1.</span> <span class="nav-text">电影名</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#主演"><span class="nav-number">1.1.2.</span> <span class="nav-text">主演</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#上映时间"><span class="nav-number">1.1.3.</span> <span class="nav-text">上映时间</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#评分"><span class="nav-number">1.1.4.</span> <span class="nav-text">评分</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#源代码"><span class="nav-number">1.1.5.</span> <span class="nav-text">源代码</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#爬取猫眼电影Top100"><span class="nav-number">1.</span> <span class="nav-text">爬取猫眼电影Top100</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#tags"><span class="nav-number">1.1.</span> <span class="nav-text">tags:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#网站分析"><span class="nav-number">1.2.</span> <span class="nav-text">网站分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#电影名"><span class="nav-number">1.2.1.</span> <span class="nav-text">电影名</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#主演"><span class="nav-number">1.2.2.</span> <span class="nav-text">主演</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#上映时间"><span class="nav-number">1.2.3.</span> <span class="nav-text">上映时间</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#评分"><span class="nav-number">1.2.4.</span> <span class="nav-text">评分</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#源代码"><span class="nav-number">1.2.5.</span> <span class="nav-text">源代码</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
