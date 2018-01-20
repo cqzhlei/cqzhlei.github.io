@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Linux 上部署 Geoserver实验环境 Linux:CentOS7                jdk-8u152-linux-x64 geoserver-2.12.1 apache-tomcat-8.5.24">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux 上部署 Geoserver">
+<meta property="og:url" content="https://github.com/cqzhlei/2018/01/20/linux上部署Geoserver/index.html">
+<meta property="og:site_name" content="zThanks">
+<meta property="og:description" content="Linux 上部署 Geoserver实验环境 Linux:CentOS7                jdk-8u152-linux-x64 geoserver-2.12.1 apache-tomcat-8.5.24">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-01-20T07:52:59.887Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Linux 上部署 Geoserver">
+<meta name="twitter:description" content="Linux 上部署 Geoserver实验环境 Linux:CentOS7                jdk-8u152-linux-x64 geoserver-2.12.1 apache-tomcat-8.5.24">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://github.com/cqzhlei/2018/01/20/linux上部署Geoserver/"/>
+
+
+
+
+
+  <title>Linux 上部署 Geoserver | zThanks</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">zThanks</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://github.com/cqzhlei/2018/01/20/linux上部署Geoserver/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zThanks">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="zThanks">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Linux 上部署 Geoserver</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-20T00:00:00+08:00">
+                2018-01-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Linux-上部署-Geoserver"><a href="#Linux-上部署-Geoserver" class="headerlink" title="Linux 上部署 Geoserver"></a>Linux 上部署 Geoserver</h1><h2 id="实验环境"><a href="#实验环境" class="headerlink" title="实验环境"></a>实验环境</h2><ul>
+<li>Linux:CentOS7               </li>
+<li><a href="http://www.oracle.com/technetwork/java/javase/downloads/java-archive-javase8-2177648.html" target="_blank" rel="external">jdk-8u152-linux-x64</a></li>
+<li><a href="https://sourceforge.net/projects/geoserver/files/GeoServer/2.12.1/geoserver-2.12.1-war.zip/download" target="_blank" rel="external">geoserver-2.12.1</a></li>
+<li><a href="https://archive.apache.org/dist/tomcat/tomcat-8/v8.5.5/bin/" target="_blank" rel="external">apache-tomcat-8.5.24</a><a id="more"></a>
+<h2 id="实验步骤"><a href="#实验步骤" class="headerlink" title="实验步骤"></a>实验步骤</h2><h3 id="安装jdk"><a href="#安装jdk" class="headerlink" title="安装jdk"></a>安装jdk</h3>因为 <em>Geoserver</em> 需要使用的JDK版本为 <em>Java8</em><ol>
+<li>上传jdk到linux文件app目录（自己创建的目录）下<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">解压缩包 tar -zxvf jdk-8u101-linux-x64.tar.gz</div></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+</ul>
+<ol>
+<li>配置环境变量<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vi /etc/profile</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>在文件的在最后加入<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">#for java</div><div class="line">export JAVA_HOME=/home/hadoop/app/jdk1.8.0_152</div><div class="line">export PATH=$JAVA_HOME/bin:$PATH</div></pre></td></tr></table></figure></p>
+<h3 id="安装tomcat"><a href="#安装tomcat" class="headerlink" title="安装tomcat"></a>安装tomcat</h3><ol>
+<li>拷贝安装包到服务上</li>
+<li>解压 tar-zxvf  /home/hadoop/apache-tomcat-8.5.5.tar.gz</li>
+<li><p>启动Tomcat </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">cd /home/hadoop/tomcat-8.5.5/bin</div><div class="line">./startup.sh</div></pre></td></tr></table></figure>
+</li>
+<li><p>停止tomcat</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">./shutdown.sh</div></pre></td></tr></table></figure>
+</li>
+<li><p>加入自启动</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vi /etc/rc.d/rc.local</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>输入<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">export JAVA_HOME=/home/hadoop/app/jdk1.8.0_152</div><div class="line">/home/hadoop/apache-tomcat-8.5.5/bin/startup.sh start</div></pre></td></tr></table></figure></p>
+<p>保存退出，</p>
+<ol>
+<li>执行 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">chmod +x /etc/rc.d/rc.local</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="部署Geoserver"><a href="#部署Geoserver" class="headerlink" title="部署Geoserver"></a>部署Geoserver</h3><ol>
+<li>解压geoserver-2.10-beta-war.zip压缩包。</li>
+<li>将获取的war包放入apache-tomcat-8.5.5/webapps路径下 </li>
+<li>在 tomcat/bin/Catalina.sh文件中<br>找到<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">-Djava.security.manager \</div><div class="line">-Djava.security.policy==&quot;\&quot;$CATALINA_BASE/conf/catalina.policy\&quot;&quot;\</div><div class="line">-Dcatalina.base=&quot;\&quot;$CATALINA_BASE\&quot;&quot; \</div><div class="line">-Dcatalina.home=&quot;\&quot;$CATALINA_HOME\&quot;&quot; \</div><div class="line">-Djava.io.tmpdir=&quot;\&quot;$CATALINA_TMPDIR\&quot;&quot;\</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>在每段后追加一句（一共有两段）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">-Djava.awt.headless=true \</div></pre></td></tr></table></figure></p>
+<p><em>该步骤解决使用中无法选择数据路径的问题。</em></p>
+<ol>
+<li><p>修改tomcat/bin/catalina.sh增加启动参数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">CATALINA_OPTS=&quot;-Djava.awt.headless=true&quot;</div></pre></td></tr></table></figure>
+</li>
+<li><p>进行tomcat跨域配置<br>由于跨域会导致地图无法正常显示，需要进行跨域配置。</p>
+</li>
+</ol>
+<p>找到apache-tomact-8.5.5/webapps/geoserver/WEB-INF/下的web.xml<br>加入如下代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line">&lt;!-- corsfilter config--&gt;</div><div class="line">     &lt;filter&gt;</div><div class="line">      &lt;filter-name&gt;CorsFilter&lt;/filter-name&gt;</div><div class="line">     &lt;filter-class&gt;org.apache.catalina.filters.CorsFilter&lt;/filter-class&gt;</div><div class="line">      &lt;init-param&gt;</div><div class="line">       &lt;param-name&gt;cors.allowed.origins&lt;/param-name&gt;</div><div class="line">       &lt;param-value&gt;*&lt;/param-value&gt;</div><div class="line">      &lt;/init-param&gt;</div><div class="line">      &lt;init-param&gt;</div><div class="line">        &lt;param-name&gt;cors.allowed.methods&lt;/param-name&gt;</div><div class="line">       &lt;param-value&gt;GET,POST,HEAD,OPTIONS,PUT&lt;/param-value&gt;</div><div class="line">      &lt;/init-param&gt;</div><div class="line">      &lt;init-param&gt;</div><div class="line">       &lt;param-name&gt;cors.allowed.headers&lt;/param-name&gt;</div><div class="line">        &lt;param-value&gt;Content-Type,X-Requested-With,accept,Origin,Access-Control-Request-Method,Access-Control-Request-Headers&lt;/param-value&gt;</div><div class="line">      &lt;/init-param&gt;</div><div class="line">      &lt;init-param&gt;</div><div class="line">       &lt;param-name&gt;cors.exposed.headers&lt;/param-name&gt;</div><div class="line">       &lt;param-value&gt;Access-Control-Allow-Origin,Access-Control-Allow-Credentials&lt;/param-value&gt;</div><div class="line">      &lt;/init-param&gt;</div><div class="line">      &lt;init-param&gt;</div><div class="line">       &lt;param-name&gt;cors.support.credentials&lt;/param-name&gt;</div><div class="line">       &lt;param-value&gt;true&lt;/param-value&gt;</div><div class="line">      &lt;/init-param&gt;</div><div class="line">      &lt;init-param&gt;</div><div class="line">       &lt;param-name&gt;cors.preflight.maxage&lt;/param-name&gt;</div><div class="line">       &lt;param-value&gt;10&lt;/param-value&gt;</div><div class="line">      &lt;/init-param&gt;</div><div class="line">    &lt;/filter&gt;</div><div class="line">    &lt;filter-mapping&gt;</div><div class="line">     &lt;filter-name&gt;CorsFilter&lt;/filter-name&gt;</div><div class="line">      &lt;url-pattern&gt;/*&lt;/url-pattern&gt;</div><div class="line">&lt;/filter-mapping&gt;</div></pre></td></tr></table></figure></p>
+<p>保存，重启tomcat。如果能访问<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">localhost:8080/geoserver/web</div></pre></td></tr></table></figure></p>
+<p>则表示配置成功🍺</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/12/16/爬虫与反爬虫/" rel="next" title="反爬虫及其应对措施">
+                <i class="fa fa-chevron-left"></i> 反爬虫及其应对措施
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.gif"
+                alt="zThanks" />
+            
+              <p class="site-author-name" itemprop="name">zThanks</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Linux-上部署-Geoserver"><span class="nav-number">1.</span> <span class="nav-text">Linux 上部署 Geoserver</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#实验环境"><span class="nav-number">1.1.</span> <span class="nav-text">实验环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实验步骤"><span class="nav-number">1.2.</span> <span class="nav-text">实验步骤</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装jdk"><span class="nav-number">1.2.1.</span> <span class="nav-text">安装jdk</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装tomcat"><span class="nav-number">1.2.2.</span> <span class="nav-text">安装tomcat</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#部署Geoserver"><span class="nav-number">1.2.3.</span> <span class="nav-text">部署Geoserver</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zThanks</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
